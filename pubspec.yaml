@@ -84,6 +84,50 @@ flutter:
     - assets/images/menus/meal.png
     - assets/images/menus/mnm.png
     - assets/images/menus/newprod.png
+    - assets/images/dndmenu/D1.png
+    - assets/images/dndmenu/D2.png
+    - assets/images/dndmenu/D3.png
+    - assets/images/dndmenu/D4.png
+    - assets/images/dndmenu/D5.png
+    - assets/images/dndmenu/D6.png
+    - assets/images/dndmenu/D7.png
+    - assets/images/dndmenu/D8.png
+    - assets/images/dndmenu/D9.png
+    - assets/images/dndmenu/D10.png
+    - assets/images/mealmenu/M1.png
+    - assets/images/mealmenu/M3.png
+    - assets/images/mealmenu/M4.png
+    - assets/images/mealmenu/M5.png
+    - assets/images/mealmenu/M6.png
+    - assets/images/mealmenu/M7.png
+    - assets/images/burgermenu/B1.png
+    - assets/images/burgermenu/B2.png
+    - assets/images/burgermenu/B3.png
+    - assets/images/burgermenu/B4.png
+    - assets/images/burgermenu/B5.png
+    - assets/images/burgermenu/B6.png
+    - assets/images/burgermenu/B7.png
+    - assets/images/happymenu/H1.png
+    - assets/images/happymenu/H2.png
+    - assets/images/happymenu/H3.png
+    - assets/images/mnmmenu/MIX1.png
+    - assets/images/mnmmenu/MIX2.png
+    - assets/images/mnmmenu/MIX3.png
+    - assets/images/mnmmenu/MIX4.png
+    - assets/images/famenus/F1.png
+    - assets/images/famenus/F2.png
+    - assets/images/famenus/F3.png
+    - assets/images/famenus/F4.png
+    - assets/images/famenus/F5.png
+    - assets/images/famenus/F6.png
+    - assets/images/famenus/F7.png
+    - assets/images/famenus/F8.png
+
+
+
+
+
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

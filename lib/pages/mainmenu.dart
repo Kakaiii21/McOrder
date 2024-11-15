@@ -60,11 +60,36 @@ class _MainmenuState extends State<Mainmenu> {
                               screenWidth,
                               screenHeight,
                               'assets/images/newprobtn.png',
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => MenuPage(
+                                      isTakeOutSelected: isTakeOutSelected,
+                                      showNewProductsMenu:
+                                          true, // Enable Fries Menu
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
                             buildMenuButton(
                               screenWidth,
                               screenHeight,
                               'assets/images/dndbtn.png',
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => MenuPage(
+                                      isTakeOutSelected: isTakeOutSelected,
+
+                                      showDrinksDessertMenu:
+                                          true, // Enable Fries Menu
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
                           ],
                         ),
@@ -75,11 +100,35 @@ class _MainmenuState extends State<Mainmenu> {
                               screenWidth,
                               screenHeight,
                               'assets/images/mealsbtn.png',
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => MenuPage(
+                                      isTakeOutSelected: isTakeOutSelected,
+
+                                      showMealMenu: true, // Enable Fries Menu
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
                             buildMenuButton(
                               screenWidth,
                               screenHeight,
                               'assets/images/burgesbtn.png',
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => MenuPage(
+                                      isTakeOutSelected: isTakeOutSelected,
+
+                                      showBurgerMenu: true, // Enable Fries Menu
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
                           ],
                         ),
@@ -90,11 +139,35 @@ class _MainmenuState extends State<Mainmenu> {
                               screenWidth,
                               screenHeight,
                               'assets/images/happymeal.png',
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => MenuPage(
+                                      isTakeOutSelected: isTakeOutSelected,
+
+                                      showHappyMMenu: true, // Enable Fries Menu
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
                             buildMenuButton(
                               screenWidth,
                               screenHeight,
                               'assets/images/mnmbtn.png',
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => MenuPage(
+                                      isTakeOutSelected: isTakeOutSelected,
+
+                                      showMnMMenu: true, // Enable Fries Menu
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
                           ],
                         ),
@@ -105,6 +178,18 @@ class _MainmenuState extends State<Mainmenu> {
                               screenWidth,
                               screenHeight,
                               'assets/images/friesnAbtn.png',
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => MenuPage(
+                                      isTakeOutSelected: isTakeOutSelected,
+
+                                      showFriesMenu: true, // Enable Fries Menu
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
                           ],
                         ),
@@ -175,7 +260,7 @@ class _MainmenuState extends State<Mainmenu> {
               ),
             ),
             Positioned(
-              bottom: 10,
+              bottom: 35,
               right: 16,
               child: Row(
                 children: [
@@ -227,19 +312,14 @@ class _MainmenuState extends State<Mainmenu> {
   }
 
   Widget buildMenuButton(
-      double screenWidth, double screenHeight, String imagePath) {
+    double screenWidth,
+    double screenHeight,
+    String imagePath, {
+    VoidCallback? onTap, // Optional callback
+  }) {
     return InkWell(
       splashColor: const Color.fromRGBO(192, 1, 0, 0.50),
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => MenuPage(
-              isTakeOutSelected: isTakeOutSelected,
-            ),
-          ),
-        );
-      },
+      onTap: onTap, // Trigger the callback when tapped
       child: Padding(
         padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
         child: Container(
