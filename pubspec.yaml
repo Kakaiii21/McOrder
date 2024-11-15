@@ -123,6 +123,43 @@ flutter:
     - assets/images/famenus/F7.png
     - assets/images/famenus/F8.png
 
+    - assets/images/addtoc/D1.png
+    - assets/images/addtoc/D2.png
+    - assets/images/addtoc/D3.png
+    - assets/images/addtoc/D4.png
+    - assets/images/addtoc/D5.png
+    - assets/images/addtoc/D6.png
+    - assets/images/addtoc/D7.png
+    - assets/images/addtoc/D8.png
+    - assets/images/addtoc/D9.png
+    - assets/images/addtoc/D10.png
+    - assets/images/addtoc/M1.png
+    - assets/images/addtoc/M3.png
+    - assets/images/addtoc/M4.png
+    - assets/images/addtoc/M5.png
+    - assets/images/addtoc/M6.png
+    - assets/images/addtoc/M7.png
+    - assets/images/addtoc/B1.png
+    - assets/images/addtoc/B2.png
+    - assets/images/addtoc/B3.png
+    - assets/images/addtoc/B4.png
+    - assets/images/addtoc/B5.png
+    - assets/images/addtoc/B6.png
+    - assets/images/addtoc/B7.png
+    - assets/images/addtoc/H1.png
+    - assets/images/addtoc/H2.png
+    - assets/images/addtoc/H3.png
+    - assets/images/addtoc/MIX1.png
+    - assets/images/addtoc/MIX4.png
+    - assets/images/addtoc/F1.png
+    - assets/images/addtoc/F2.png
+    - assets/images/addtoc/F3.png
+    - assets/images/addtoc/F4.png
+    - assets/images/addtoc/F5.png
+    - assets/images/addtoc/F6.png
+    - assets/images/addtoc/F7.png
+    - assets/images/addtoc/F8.png
+
 
 
 

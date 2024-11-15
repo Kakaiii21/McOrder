@@ -5,6 +5,7 @@ import 'package:mobile_application/pages/done.dart';
 import 'package:mobile_application/pages/login.dart';
 import 'package:mobile_application/pages/mainmenu.dart'; // Make sure to import MainMenu
 import 'package:mobile_application/pages/menu.dart';
+import 'package:mobile_application/pages/order.dart';
 import 'package:mobile_application/pages/signup.dart';
 import 'package:mobile_application/pages/signup2.dart';
 import 'package:mobile_application/pages/startup.dart';
@@ -28,6 +29,7 @@ class McOrderApp extends StatelessWidget {
         '/mainmenu': (context) =>
             const Mainmenu(isTakeOutSelected: false), // Pass the parameter here
         '/menu': (context) => const MenuPage(isTakeOutSelected: false),
+        '/orderDetailsPage': (context) => const orderDetails(),
       },
     );
   }
