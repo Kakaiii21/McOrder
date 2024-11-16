@@ -131,27 +131,34 @@ class _MenuPageState extends State<MenuPage> {
                         ],
                       ),
                     ),
-                    ElevatedButton(
-                      onPressed: () {
-                        double totalPrice = price * quantity;
+                    Container(
+                      height: 50,
+                      width: 300,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          double totalPrice = price * quantity;
 
-                        // Navigator.push(
-                        //  context,
-                        // MaterialPageRoute(
-                        //   builder: (context) => OrderSummaryPage(
-                        //     itemName: itemName,
-                        //     totalPrice: totalPrice,
-                        //    imagePath: imagePath,
-                        //  ),
-                        // ),
-                        // );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromRGBO(255, 174, 0, 1),
-                      ),
-                      child: Text(
-                        'Add Order for $itemName',
-                        style: TextStyle(color: Colors.white),
+                          // Navigator.push(
+                          //  context,
+                          // MaterialPageRoute(
+                          //   builder: (context) => OrderSummaryPage(
+                          //     itemName: itemName,
+                          //     totalPrice: totalPrice,
+                          //    imagePath: imagePath,
+                          //  ),
+                          // ),
+                          // );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color.fromRGBO(255, 174, 0, 1),
+                        ),
+                        child: Text(
+                          'Add Order',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontFamily: "DM Sans"),
+                        ),
                       ),
                     ),
                   ],
@@ -409,7 +416,7 @@ class _MenuPageState extends State<MenuPage> {
                                     'assets/images/dndmenu/D4.png',
                                     "McFlurry",
                                     66.00,
-                                    ""),
+                                    "assets/images/addtoc/D4.png"),
                               ],
                             ),
                             Row(
@@ -421,14 +428,14 @@ class _MenuPageState extends State<MenuPage> {
                                     'assets/images/dndmenu/D5.png',
                                     "Hot Fudge",
                                     66.00,
-                                    ""),
+                                    "assets/images/addtoc/D5.png"),
                                 buildMenuButton(
                                     screenWidth,
                                     screenHeight,
                                     'assets/images/dndmenu/D6.png',
                                     "Hot Caramel",
                                     55.00,
-                                    ""),
+                                    "assets/images/addtoc/D6.png"),
                               ],
                             ),
                             Row(
@@ -440,56 +447,33 @@ class _MenuPageState extends State<MenuPage> {
                                     'assets/images/dndmenu/D7.png',
                                     "Vanilla Sundae",
                                     20.00,
-                                    ""),
+                                    "assets/images/addtoc/D7.png"),
                                 buildMenuButton(
                                     screenWidth,
                                     screenHeight,
                                     'assets/images/dndmenu/D8.png',
                                     "Apple Pie",
                                     43.00,
-                                    ""),
+                                    "assets/images/addtoc/D8.png"),
                               ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                buildMenuButton(screenWidth, screenHeight,
-                                    'assets/images/dndmenu/D9.png', "", 0, ""),
-                                buildMenuButton(screenWidth, screenHeight,
-                                    'assets/images/dndmenu/D10.png', "", 0, ""),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 100,
-                            )
-                          ])
-                        else if (showMealMenu)
-                          Column(children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                buildMenuButton(screenWidth, screenHeight,
-                                    'assets/images/mealmenu/M1.png', "", 0, ""),
-                                buildMenuButton(screenWidth, screenHeight,
-                                    'assets/images/mealmenu/M3.png', "", 0, ""),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                buildMenuButton(screenWidth, screenHeight,
-                                    'assets/images/mealmenu/M4.png', "", 0, ""),
-                                buildMenuButton(screenWidth, screenHeight,
-                                    'assets/images/mealmenu/M5.png', "", 0, ""),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                buildMenuButton(screenWidth, screenHeight,
-                                    'assets/images/mealmenu/M6.png', "", 0, ""),
-                                buildMenuButton(screenWidth, screenHeight,
-                                    'assets/images/mealmenu/M7.png', "", 0, ""),
+                                buildMenuButton(
+                                    screenWidth,
+                                    screenHeight,
+                                    'assets/images/dndmenu/D9.png',
+                                    "McCafe",
+                                    67,
+                                    "assets/images/addtoc/D9.png"),
+                                buildMenuButton(
+                                    screenWidth,
+                                    screenHeight,
+                                    'assets/images/dndmenu/D10.png',
+                                    "Orange Juice",
+                                    82,
+                                    "assets/images/addtoc/D10.png"),
                               ],
                             ),
                             SizedBox(
@@ -501,28 +485,58 @@ class _MenuPageState extends State<MenuPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                buildMenuButton(screenWidth, screenHeight,
-                                    'assets/images/mealmenu/M1.png', "", 0, ""),
-                                buildMenuButton(screenWidth, screenHeight,
-                                    'assets/images/mealmenu/M3.png', "", 0, ""),
+                                buildMenuButton(
+                                    screenWidth,
+                                    screenHeight,
+                                    'assets/images/mealmenu/M1.png',
+                                    "1-pc,Chicken McDo & Fries Meal",
+                                    182,
+                                    "assets/images/addtoc/M1.png"),
+                                buildMenuButton(
+                                    screenWidth,
+                                    screenHeight,
+                                    'assets/images/mealmenu/M3.png',
+                                    "1-pc. Chicken McDo with Rice",
+                                    99,
+                                    "assets/images/addtoc/M3.png"),
                               ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                buildMenuButton(screenWidth, screenHeight,
-                                    'assets/images/mealmenu/M4.png', "", 0, ""),
-                                buildMenuButton(screenWidth, screenHeight,
-                                    'assets/images/mealmenu/M5.png', "", 0, ""),
+                                buildMenuButton(
+                                    screenWidth,
+                                    screenHeight,
+                                    'assets/images/mealmenu/M4.png',
+                                    "McCrispy Chicken Fillet w/ Fries Meal",
+                                    156,
+                                    "assets/images/addtoc/M4.png"),
+                                buildMenuButton(
+                                    screenWidth,
+                                    screenHeight,
+                                    'assets/images/mealmenu/M5.png',
+                                    "6-pc. Chicken McNuggets w/ Fries Meal",
+                                    182,
+                                    "assets/images/addtoc/M5.png"),
                               ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                buildMenuButton(screenWidth, screenHeight,
-                                    'assets/images/mealmenu/M6.png', "", 0, ""),
-                                buildMenuButton(screenWidth, screenHeight,
-                                    'assets/images/mealmenu/M7.png', "", 0, ""),
+                                buildMenuButton(
+                                    screenWidth,
+                                    screenHeight,
+                                    'assets/images/mealmenu/M6.png',
+                                    "McCrispy Chicken Fillet Ala King w/ Fries Meal",
+                                    163,
+                                    "assets/images/addtoc/M6.png"),
+                                buildMenuButton(
+                                    screenWidth,
+                                    screenHeight,
+                                    'assets/images/mealmenu/M7.png',
+                                    "6-pc. Chicken McNuggets w/ Fries Meal",
+                                    203,
+                                    "assets/images/addtoc/M7.png"),
                               ],
                             ),
                             SizedBox(
@@ -538,16 +552,16 @@ class _MenuPageState extends State<MenuPage> {
                                     screenWidth,
                                     screenHeight,
                                     'assets/images/burgermenu/B1.png',
-                                    "",
-                                    0,
-                                    ""),
+                                    "Big Mac",
+                                    182,
+                                    "assets/images/addtoc/B1.png"),
                                 buildMenuButton(
                                     screenWidth,
                                     screenHeight,
                                     'assets/images/burgermenu/B2.png',
-                                    "",
-                                    0,
-                                    ""),
+                                    "Burger McDo",
+                                    44,
+                                    "assets/images/addtoc/B2.png"),
                               ],
                             ),
                             Row(
@@ -557,16 +571,16 @@ class _MenuPageState extends State<MenuPage> {
                                     screenWidth,
                                     screenHeight,
                                     'assets/images/burgermenu/B3.png',
-                                    "",
-                                    0,
-                                    ""),
+                                    "Quarter Pounder",
+                                    179,
+                                    "assets/images/addtoc/B3.png"),
                                 buildMenuButton(
                                     screenWidth,
                                     screenHeight,
                                     'assets/images/burgermenu/B4.png',
-                                    "",
-                                    0,
-                                    ""),
+                                    "Double",
+                                    142,
+                                    "assets/images/addtoc/B4.png"),
                               ],
                             ),
                             Row(
@@ -576,16 +590,16 @@ class _MenuPageState extends State<MenuPage> {
                                     screenWidth,
                                     screenHeight,
                                     'assets/images/burgermenu/B5.png',
-                                    "",
-                                    0,
-                                    ""),
+                                    "CheeseBurger",
+                                    95,
+                                    "assets/images/addtoc/B5.png"),
                                 buildMenuButton(
                                     screenWidth,
                                     screenHeight,
                                     'assets/images/burgermenu/B6.png',
-                                    "",
-                                    0,
-                                    ""),
+                                    "McCrispy",
+                                    70,
+                                    "assets/images/addtoc/B6.png"),
                               ],
                             ),
                             Row(
@@ -595,9 +609,9 @@ class _MenuPageState extends State<MenuPage> {
                                     screenWidth,
                                     screenHeight,
                                     'assets/images/burgermenu/B7.png',
-                                    "",
-                                    0,
-                                    ""),
+                                    "McChicken",
+                                    70,
+                                    "assets/images/addtoc/B7.png"),
                               ],
                             ),
                             SizedBox(
@@ -613,16 +627,16 @@ class _MenuPageState extends State<MenuPage> {
                                     screenWidth,
                                     screenHeight,
                                     'assets/images/happymenu/H1.png',
-                                    "",
-                                    0,
-                                    ""),
+                                    "McSpaghetti with McFries and Juice + the latest Toy",
+                                    83,
+                                    "assets/images/addtoc/H1.png"),
                                 buildMenuButton(
                                     screenWidth,
                                     screenHeight,
                                     'assets/images/happymenu/H2.png',
-                                    "",
-                                    0,
-                                    ""),
+                                    "Burger McDo with McFries and Juice + the latest Toy",
+                                    83,
+                                    "assets/images/addtoc/H2.png"),
                               ],
                             ),
                             Row(
@@ -632,9 +646,9 @@ class _MenuPageState extends State<MenuPage> {
                                     screenWidth,
                                     screenHeight,
                                     'assets/images/happymenu/H3.png',
-                                    "",
-                                    0,
-                                    ""),
+                                    "Chicken McDo (1 Piece Meal) + the latest Toy",
+                                    83,
+                                    "assets/images/addtoc/H3.png"),
                               ],
                             ),
                             SizedBox(
@@ -650,16 +664,16 @@ class _MenuPageState extends State<MenuPage> {
                                     screenWidth,
                                     screenHeight,
                                     'assets/images/mnmmenu/MIX1.png',
-                                    "",
+                                    "McSpaghetti",
                                     0,
-                                    ""),
+                                    "assets/images/addtoc/MIX1.png"),
                                 buildMenuButton(
                                     screenWidth,
                                     screenHeight,
                                     'assets/images/mnmmenu/MIX2.png',
-                                    "",
+                                    "Burger McDo",
                                     0,
-                                    ""),
+                                    "assets/images/addtoc/MIX2.png"),
                               ],
                             ),
                             Row(
@@ -669,16 +683,16 @@ class _MenuPageState extends State<MenuPage> {
                                     screenWidth,
                                     screenHeight,
                                     'assets/images/mnmmenu/MIX3.png',
-                                    "",
+                                    "McCrispy",
                                     0,
-                                    ""),
+                                    "assets/images/addtoc/MIX3.png"),
                                 buildMenuButton(
                                     screenWidth,
                                     screenHeight,
                                     'assets/images/mnmmenu/MIX4.png',
-                                    "",
+                                    "1pc Mushroom Pepper Steak",
                                     0,
-                                    ""),
+                                    "assets/images/addtoc/MIX4.png"),
                               ],
                             ),
                             SizedBox(
@@ -690,37 +704,77 @@ class _MenuPageState extends State<MenuPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                buildMenuButton(screenWidth, screenHeight,
-                                    'assets/images/famenus/F1.png', "", 0, ""),
-                                buildMenuButton(screenWidth, screenHeight,
-                                    'assets/images/famenus/F2.png', "", 0, ""),
+                                buildMenuButton(
+                                    screenWidth,
+                                    screenHeight,
+                                    'assets/images/famenus/F1.png',
+                                    "Medium Fries",
+                                    83,
+                                    "assets/images/addtoc/F1.png"),
+                                buildMenuButton(
+                                    screenWidth,
+                                    screenHeight,
+                                    'assets/images/famenus/F2.png',
+                                    "Regular Fries",
+                                    45,
+                                    "assets/images/addtoc/F2.png"),
                               ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                buildMenuButton(screenWidth, screenHeight,
-                                    'assets/images/famenus/F3.png', "", 0, ""),
-                                buildMenuButton(screenWidth, screenHeight,
-                                    'assets/images/famenus/F4.png', "", 0, ""),
+                                buildMenuButton(
+                                    screenWidth,
+                                    screenHeight,
+                                    'assets/images/famenus/F3.png',
+                                    "BFF Fries",
+                                    169,
+                                    ""),
+                                buildMenuButton(
+                                    screenWidth,
+                                    screenHeight,
+                                    'assets/images/famenus/F4.png',
+                                    "Shake Shake Fries",
+                                    142,
+                                    "assets/images/addtoc/F4.png"),
                               ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                buildMenuButton(screenWidth, screenHeight,
-                                    'assets/images/famenus/F5.png', "", 0, ""),
-                                buildMenuButton(screenWidth, screenHeight,
-                                    'assets/images/famenus/F6.png', "", 0, ""),
+                                buildMenuButton(
+                                    screenWidth,
+                                    screenHeight,
+                                    'assets/images/famenus/F5.png',
+                                    "Spicy Buffallo Sauce",
+                                    17,
+                                    "assets/images/addtoc/F5.png"),
+                                buildMenuButton(
+                                    screenWidth,
+                                    screenHeight,
+                                    'assets/images/famenus/F6.png',
+                                    "Ranch Sauce",
+                                    17,
+                                    "assets/images/addtoc/F6.png"),
                               ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                buildMenuButton(screenWidth, screenHeight,
-                                    'assets/images/famenus/F7.png', "", 0, ""),
-                                buildMenuButton(screenWidth, screenHeight,
-                                    'assets/images/famenus/F8.png', "", 0, ""),
+                                buildMenuButton(
+                                    screenWidth,
+                                    screenHeight,
+                                    'assets/images/famenus/F7.png',
+                                    "Sweet N’ Sour Sauce",
+                                    17,
+                                    "assets/images/addtoc/F7.png"),
+                                buildMenuButton(
+                                    screenWidth,
+                                    screenHeight,
+                                    'assets/images/famenus/F8.png',
+                                    "Ketchup Paket Sauce",
+                                    17,
+                                    "assets/images/addtoc/F8.png"),
                               ],
                             ),
                             SizedBox(
