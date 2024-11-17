@@ -9,6 +9,9 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   bool _isPasswordVisible = false;
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
+  final _formKey = GlobalKey<FormState>(); // To validate the form
 
   @override
   Widget build(BuildContext context) {
@@ -58,66 +61,156 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                     SizedBox(height: screenHeight * 0.03),
-                    Text(
-                      'First Name',
-                      style: TextStyle(
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w400,
-                        fontSize: screenWidth * 0.05,
-                        color: Colors.white,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: screenHeight * 0.01),
-                      child: TextField(
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: screenHeight * 0.02),
-                    Text(
-                      'Last Name',
-                      style: TextStyle(
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w400,
-                        fontSize: screenWidth * 0.05,
-                        color: Colors.white,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: screenHeight * 0.01),
-                      child: TextField(
-                        obscureText: !_isPasswordVisible,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              _isPasswordVisible
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
-                              color: Colors.grey,
+                    // Form for validation
+                    Form(
+                      key: _formKey, // Attach form key
+                      child: Column(
+                        children: [
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              'First Name',
+                              style: TextStyle(
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.w400,
+                                fontSize: screenWidth * 0.05,
+                                color: Colors.white,
+                              ),
                             ),
-                            onPressed: () {
-                              setState(() {
-                                _isPasswordVisible = !_isPasswordVisible;
-                              });
-                            },
                           ),
-                        ),
+                          Padding(
+                            padding: EdgeInsets.only(top: screenHeight * 0.01),
+                            child: TextFormField(
+                              controller: _firstNameController,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: BorderSide(
+                                    color: _firstNameController.text.isEmpty
+                                        ? Colors
+                                            .red // Red color for empty input
+                                        : Colors
+                                            .blue, // Blue color for filled input
+                                    width: 2.0,
+                                  ),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: BorderSide(
+                                    color: _firstNameController.text.isEmpty
+                                        ? Colors
+                                            .red // Red color for empty input
+                                        : Colors
+                                            .grey, // Default color when not focused
+                                    width: 2.0,
+                                  ),
+                                ),
+                                errorStyle: TextStyle(
+                                  color: Colors
+                                      .white, // White color for error text
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter your first name';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                          SizedBox(height: screenHeight * 0.02),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              'Last Name',
+                              style: TextStyle(
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.w400,
+                                fontSize: screenWidth * 0.05,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: screenHeight * 0.01),
+                            child: TextFormField(
+                              controller: _lastNameController,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: BorderSide(
+                                    color: _lastNameController.text.isEmpty
+                                        ? Colors
+                                            .red // Red color for empty input
+                                        : Colors
+                                            .blue, // Blue color for filled input
+                                    width: 2.0,
+                                  ),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: BorderSide(
+                                    color: _lastNameController.text.isEmpty
+                                        ? Colors
+                                            .red // Red color for empty input
+                                        : Colors
+                                            .grey, // Default color when not focused
+                                    width: 2.0,
+                                  ),
+                                ),
+                                errorStyle: TextStyle(
+                                  color: Colors
+                                      .white, // White color for error text
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter your last name';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                          SizedBox(height: screenHeight * 0.02),
+                        ],
                       ),
                     ),
-                    SizedBox(
-                        height: screenHeight *
-                            0.1), // Space for the button at the bottom
+                    Row(
+                      children: [
+                        Text(
+                          "Already Have an Account?",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'Poppins',
+                            fontSize: screenWidth * 0.04,
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/loginpage');
+                          },
+                          child: Text(
+                            "Login",
+                            style: TextStyle(
+                              color: Colors.lightBlue,
+                              fontFamily: 'Poppins',
+                              fontSize: screenWidth * 0.043,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ), // Space for the button at the bottom
                   ],
                 ),
               ),
@@ -130,7 +223,11 @@ class _SignUpPageState extends State<SignUpPage> {
                 padding: EdgeInsets.all(0),
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/signup2');
+                    // Validate the form
+                    if (_formKey.currentState?.validate() ?? false) {
+                      // If form is valid, navigate to the next page
+                      Navigator.pushNamed(context, '/signup2');
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     padding:

@@ -13,6 +13,7 @@ class _SignUp2State extends State<SignUp2> {
   final TextEditingController _passwordController = TextEditingController();
   final _auth = AuthService();
   bool _isPasswordVisible = false;
+  String? _errorMessage; // Variable to hold error message
 
   @override
   void dispose() {
@@ -80,7 +81,7 @@ class _SignUp2State extends State<SignUp2> {
                     Padding(
                       padding: EdgeInsets.only(top: screenHeight * 0.01),
                       child: TextField(
-                        controller: _emailController, // Add this line
+                        controller: _emailController,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
@@ -103,8 +104,7 @@ class _SignUp2State extends State<SignUp2> {
                     Padding(
                       padding: EdgeInsets.only(top: screenHeight * 0.01),
                       child: TextField(
-                        controller: _passwordController, // Add this line
-
+                        controller: _passwordController,
                         obscureText: !_isPasswordVisible,
                         decoration: InputDecoration(
                           filled: true,
@@ -128,6 +128,19 @@ class _SignUp2State extends State<SignUp2> {
                         ),
                       ),
                     ),
+                    // Display error message if any
+                    if (_errorMessage != null) ...[
+                      SizedBox(height: screenHeight * 0.02),
+                      Text(
+                        _errorMessage!,
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w400,
+                          fontSize: screenWidth * 0.045,
+                          color: Colors.white, // White text for error
+                        ),
+                      ),
+                    ],
                     SizedBox(
                         height: screenHeight *
                             0.1), // Space for the button at the bottom
@@ -170,11 +183,18 @@ class _SignUp2State extends State<SignUp2> {
   }
 
   _signup() async {
-    final user = await _auth.createSUserWithEmailAndPassword(
-        _emailController.text, _passwordController.text);
-    if (user != null) {
-      print("User Created Successfully");
-      Navigator.pushNamed(context, '/done');
+    try {
+      final user = await _auth.createSUserWithEmailAndPassword(
+          _emailController.text, _passwordController.text);
+      if (user != null) {
+        print("User Created Successfully");
+        Navigator.pushNamed(context, '/done');
+      }
+    } catch (e) {
+      setState(() {
+        _errorMessage = e.toString(); // Set the error message
+      });
+      print(e.toString());
     }
   }
 }

@@ -11,6 +11,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   bool _isPasswordVisible = false;
   final _auth = AuthService();
+  bool _isPasswordError = false; // Track if there is a password error
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -20,27 +21,6 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
-  }
-
-  // Function to show error dialog
-  void _showErrorDialog(String message) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('Error'),
-          content: Text(message),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text('OK'),
-            ),
-          ],
-        );
-      },
-    );
   }
 
   @override
@@ -172,6 +152,22 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                     ),
+                    // Show error message if password is incorrect
+                    // Show error message if password is incorrect
+                    if (_isPasswordError)
+                      Padding(
+                        padding: EdgeInsets.only(left: screenWidth * 0.02),
+                        child: Text(
+                          "Incorrect password. Please try again.",
+                          style: TextStyle(
+                            color: Colors
+                                .white, // Change error text color to white
+                            fontFamily: 'Poppins',
+                            fontSize: screenWidth * 0.04,
+                          ),
+                        ),
+                      ),
+
                     TextButton(
                       onPressed: () {},
                       child: Text(
@@ -195,7 +191,9 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/signup');
+                          },
                           child: Text(
                             "Sign Up",
                             style: TextStyle(
@@ -242,11 +240,41 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   _login() async {
-    final user = await _auth.loginUserWithEmailAndPassword(
-        _emailController.text, _passwordController.text);
-    if (user != null) {
-      print("User Logged");
-      Navigator.pushNamed(context, '/startup');
+    if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
+      return; // Stop further execution if fields are empty
     }
+
+    try {
+      final user = await _auth.loginUserWithEmailAndPassword(
+          _emailController.text, _passwordController.text);
+      if (user != null) {
+        print("User Logged In");
+        Navigator.pushNamed(context, '/startup');
+      }
+    } catch (e) {
+      _showErrorDialog(e.toString());
+      // Highlight the password field if error occurs
+      setState(() {
+        _isPasswordError = true;
+      });
+    }
+  }
+
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Login Error'),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('OK'),
+          ),
+        ],
+      ),
+    );
   }
 }
