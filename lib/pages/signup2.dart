@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_application/services/authentication.dart';
 
 class SignUp2 extends StatefulWidget {
   const SignUp2({super.key});
@@ -8,7 +9,17 @@ class SignUp2 extends StatefulWidget {
 }
 
 class _SignUp2State extends State<SignUp2> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final _auth = AuthService();
   bool _isPasswordVisible = false;
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +80,7 @@ class _SignUp2State extends State<SignUp2> {
                     Padding(
                       padding: EdgeInsets.only(top: screenHeight * 0.01),
                       child: TextField(
+                        controller: _emailController, // Add this line
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
@@ -91,6 +103,8 @@ class _SignUp2State extends State<SignUp2> {
                     Padding(
                       padding: EdgeInsets.only(top: screenHeight * 0.01),
                       child: TextField(
+                        controller: _passwordController, // Add this line
+
                         obscureText: !_isPasswordVisible,
                         decoration: InputDecoration(
                           filled: true,
@@ -128,9 +142,7 @@ class _SignUp2State extends State<SignUp2> {
                 width: double.infinity,
                 padding: EdgeInsets.all(0),
                 child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/done');
-                  },
+                  onPressed: _signup,
                   style: ElevatedButton.styleFrom(
                     padding:
                         EdgeInsets.symmetric(vertical: screenHeight * 0.03),
@@ -155,5 +167,14 @@ class _SignUp2State extends State<SignUp2> {
         ),
       ),
     );
+  }
+
+  _signup() async {
+    final user = await _auth.createSUserWithEmailAndPassword(
+        _emailController.text, _passwordController.text);
+    if (user != null) {
+      print("User Created Successfully");
+      Navigator.pushNamed(context, '/done');
+    }
   }
 }

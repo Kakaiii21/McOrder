@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_application/services/authentication.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -9,8 +10,38 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _isPasswordVisible = false;
+  final _auth = AuthService();
+
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+  }
+
+  // Function to show error dialog
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Error'),
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -187,12 +218,7 @@ class _LoginPageState extends State<LoginPage> {
       bottomNavigationBar: Padding(
         padding: EdgeInsets.symmetric(vertical: screenHeight * 0),
         child: TextButton(
-          onPressed: () {
-            if (_emailController.text == "user" &&
-                _passwordController.text == "1121") {
-              Navigator.pushNamed(context, '/startup');
-            }
-          },
+          onPressed: _login,
           style: TextButton.styleFrom(
             backgroundColor: const Color.fromRGBO(239, 146, 0, 1),
             shape: RoundedRectangleBorder(
@@ -213,5 +239,14 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  _login() async {
+    final user = await _auth.loginUserWithEmailAndPassword(
+        _emailController.text, _passwordController.text);
+    if (user != null) {
+      print("User Logged");
+      Navigator.pushNamed(context, '/startup');
+    }
   }
 }

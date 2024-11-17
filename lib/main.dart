@@ -1,4 +1,5 @@
 // main.dart (in McOrderApp)
+import 'package:firebase_core/firebase_core.dart'; // Ensure this import is present
 import 'package:flutter/material.dart';
 import 'package:mobile_application/pages/dine_in.dart';
 import 'package:mobile_application/pages/done.dart';
@@ -12,7 +13,11 @@ import 'package:mobile_application/pages/signup.dart';
 import 'package:mobile_application/pages/signup2.dart';
 import 'package:mobile_application/pages/startup.dart';
 
-void main() => runApp(const McOrderApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(const McOrderApp());
+}
 
 class McOrderApp extends StatelessWidget {
   const McOrderApp({super.key});
