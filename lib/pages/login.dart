@@ -192,7 +192,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         TextButton(
                           onPressed: () {
-                            Navigator.pushNamed(context, '/signup');
+                            Navigator.pushNamed(context, '/signup2');
                           },
                           child: Text(
                             "Sign Up",
@@ -215,7 +215,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.symmetric(
-            vertical: screenHeight * 0.04), // Adjust vertical padding
+            vertical: screenHeight * 0.00), // Adjust vertical padding
         child: TextButton(
           onPressed: _login,
           style: TextButton.styleFrom(

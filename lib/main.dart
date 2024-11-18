@@ -1,11 +1,10 @@
-// main.dart (in McOrderApp)
-import 'package:firebase_core/firebase_core.dart'; // Ensure this import is present
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_application/pages/dine_in.dart';
 import 'package:mobile_application/pages/done.dart';
 import 'package:mobile_application/pages/end.dart';
 import 'package:mobile_application/pages/login.dart';
-import 'package:mobile_application/pages/mainmenu.dart'; // Make sure to import MainMenu
+import 'package:mobile_application/pages/mainmenu.dart';
 import 'package:mobile_application/pages/menu.dart';
 import 'package:mobile_application/pages/order.dart';
 import 'package:mobile_application/pages/payment.dart';
@@ -13,14 +12,28 @@ import 'package:mobile_application/pages/signup.dart';
 import 'package:mobile_application/pages/signup2.dart';
 import 'package:mobile_application/pages/startup.dart';
 
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const McOrderApp());
 }
 
-class McOrderApp extends StatelessWidget {
+class McOrderApp extends StatefulWidget {
   const McOrderApp({super.key});
+
+  @override
+  _McOrderAppState createState() => _McOrderAppState();
+}
+
+class _McOrderAppState extends State<McOrderApp> {
+  int cartItemCount = 0;
+
+  // Function to update cart item count
+  void updateCartItemCount(int change) {
+    setState(() {
+      cartItemCount += change;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,12 +46,12 @@ class McOrderApp extends StatelessWidget {
         '/signup2': (context) => const SignUp2(),
         '/done': (context) => const DonePage(),
         '/dinepage': (context) => const DineInOut(),
-        '/mainmenu': (context) =>
-            const Mainmenu(isTakeOutSelected: false), // Pass the parameter here
+        '/mainmenu': (context) => Mainmenu(isTakeOutSelected: false),
         '/menu': (context) => const MenuPage(isTakeOutSelected: false),
-        '/orderDetailsPage': (context) =>
-            const OrderDetails(orders: [], isTakeOutSelected: false),
-
+        '/orderDetailsPage': (context) => OrderDetails(
+              orders: [],
+              isTakeOutSelected: false,
+            ),
         '/payment': (context) => Payment(),
         '/endpage': (context) => const EndPage(orderNumber: "000000"),
       },

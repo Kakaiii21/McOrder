@@ -46,12 +46,12 @@ class EndPage extends StatelessWidget {
                       .min, // Ensure that the column sizes to the content
                   children: [
                     Container(
-                      margin: EdgeInsets.fromLTRB(5, 70, 5, 30),
+                      margin: EdgeInsets.fromLTRB(5, 95, 5, 90),
                       child: Text(
                         orderNumber, // Display the passed order number
                         textAlign: TextAlign.center,
                         style: const TextStyle(
-                          fontSize: 150,
+                          fontSize: 100,
                           fontFamily: "DM Sans",
                           fontWeight: FontWeight.bold,
                           color: Colors.red,

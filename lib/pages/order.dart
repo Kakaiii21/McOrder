@@ -135,6 +135,15 @@ class _OrderDetailsState extends State<OrderDetails> {
                                           color: Colors.grey,
                                         ),
                                       ),
+                                      trailing: IconButton(
+                                        icon: Icon(Icons.delete),
+                                        onPressed: () {
+                                          setState(() {
+                                            widget.orders.removeAt(
+                                                index); // Remove item from the orders list
+                                          });
+                                        },
+                                      ),
                                     );
                                   },
                                 )
@@ -189,7 +198,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                     ),
                     child: ElevatedButton(
                       onPressed: () {
-                        // Assuming `widget.orders` contains the order details and `widget.isTakeOutSelected` holds the selected state
+                        // Assuming widget.orders contains the order details and widget.isTakeOutSelected holds the selected state
                         Navigator.pushNamed(
                           context,
                           '/payment',
@@ -224,7 +233,6 @@ class _OrderDetailsState extends State<OrderDetails> {
                       ),
                     ),
                   ),
-                  // Cancel Button
                   Padding(
                     padding: EdgeInsets.only(
                       left: screenWidth * 0.2,
