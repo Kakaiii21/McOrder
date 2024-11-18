@@ -82,6 +82,7 @@ flutter:
     - assets/images/mnmbtn.png
     - assets/images/happymeal.png
     - assets/images/cart.png
+    - assets/images/logoutbtn.png
     - assets/images/menus/mainmenubtn.png
     - assets/images/menus/burger.png
     - assets/images/menus/dnd.png
@@ -128,6 +129,12 @@ flutter:
     - assets/images/famenus/F6.png
     - assets/images/famenus/F7.png
     - assets/images/famenus/F8.png
+    - assets/images/newprod/N1.png
+    - assets/images/newprod/N2.png
+    - assets/images/newprod/N3.png
+    - assets/images/newprod/N4.png
+    - assets/images/numberbg.png
+
 
     - assets/images/addtoc/D1.png
     - assets/images/addtoc/D2.png
@@ -167,7 +174,10 @@ flutter:
     - assets/images/addtoc/F6.png
     - assets/images/addtoc/F7.png
     - assets/images/addtoc/F8.png
-
+    - assets/images/addtoc/N1.png
+    - assets/images/addtoc/N2.png
+    - assets/images/addtoc/N3.png
+    - assets/images/addtoc/N4.png
 
 
 

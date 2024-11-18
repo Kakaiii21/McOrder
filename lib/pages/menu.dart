@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_application/main.dart';
 import 'package:mobile_application/pages/mainmenu.dart';
 import 'package:mobile_application/pages/order.dart';
+import 'package:mobile_application/services/authentication.dart';
 
 class MenuPage extends StatefulWidget {
   final bool isTakeOutSelected;
@@ -134,7 +136,7 @@ class _MenuPageState extends State<MenuPage> {
                     onPressed: () {
                       if (quantity > 0) {
                         setState(() {
-                          // Add the order to the list
+                          // Add the order to the orders list
                           orders.add({
                             'itemName': itemName,
                             'imagePath': imagePath,
@@ -142,8 +144,9 @@ class _MenuPageState extends State<MenuPage> {
                             'totalPrice': price * quantity,
                           });
 
-                          // Update the cart item count
-                          cartItemCount += quantity;
+                          // Increase cart item count by the quantity of the item being added
+                          cartItemCount +=
+                              quantity; // This updates the count of items in the cart
                         });
 
                         // Close the dialog
@@ -302,6 +305,38 @@ class _MenuPageState extends State<MenuPage> {
                           });
                         }),
                         SizedBox(height: 50),
+                        buildMenuButtonmain(screenWidth, screenHeight,
+                            'assets/images/logoutbtn.png', withBorder: true,
+                            onTap: () async {
+                          // Show confirmation dialog before logging out
+                          bool shouldLogout = await _showLogoutDialog(context);
+
+                          if (shouldLogout) {
+                            // Create an instance of AuthService
+                            AuthService authService = AuthService();
+
+                            // Log the user out
+                            try {
+                              await authService
+                                  .logoutUser(); // Call the instance method on authService
+                              print('User logged out successfully');
+
+                              // Navigate back to the main screen (HomeScreen)
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        HomeScreen()), // Navigate back to HomeScreen
+                              );
+                            } catch (e) {
+                              print('Error: $e'); // Handle any logout errors
+                              // Optionally, show an error message to the user
+                              _showErrorDialog(context,
+                                  'An error occurred while logging out. Please try again.');
+                            }
+                          }
+                        }),
+                        SizedBox(height: 50),
                         SizedBox(height: 50),
                         SizedBox(height: 50),
                       ],
@@ -355,17 +390,37 @@ class _MenuPageState extends State<MenuPage> {
                                   buildMenuButton(
                                       screenWidth,
                                       screenHeight,
-                                      'assets/images/dndbtn.png',
-                                      "prid",
-                                      4,
-                                      ""),
+                                      'assets/images/newprod/N1.png',
+                                      "McFlurry Pistachio",
+                                      75,
+                                      "assets/images/addtoc/N1.png"),
                                   buildMenuButton(
                                       screenWidth,
                                       screenHeight,
-                                      'assets/images/mnmbtn.png',
-                                      "dfsaf",
-                                      564,
-                                      ""),
+                                      'assets/images/newprod/N2.png',
+                                      "Berlingo Fruit",
+                                      58,
+                                      "assets/images/addtoc/N2.png"),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  buildMenuButton(
+                                      screenWidth,
+                                      screenHeight,
+                                      'assets/images/newprod/N3.png',
+                                      "Bacon McBurger",
+                                      99,
+                                      "assets/images/addtoc/N3.png"),
+                                  buildMenuButton(
+                                      screenWidth,
+                                      screenHeight,
+                                      'assets/images/newprod/N4.png',
+                                      "McFlurry M&M’s",
+                                      75,
+                                      "assets/images/addtoc/N4.png"),
                                 ],
                               ),
                             ],
@@ -721,7 +776,7 @@ class _MenuPageState extends State<MenuPage> {
                                     'assets/images/famenus/F3.png',
                                     "BFF Fries",
                                     169,
-                                    ""),
+                                    "assets/images/addtoc/F3.png"),
                                 buildMenuButton(
                                     screenWidth,
                                     screenHeight,
@@ -978,4 +1033,56 @@ class _MenuPageState extends State<MenuPage> {
       ),
     );
   }
+}
+
+Future<bool> _showLogoutDialog(BuildContext context) async {
+  // We now explicitly return true or false to match the return type of Future<bool>
+  return await showDialog<bool>(
+        context: context,
+        barrierDismissible:
+            false, // Prevents dismissal by tapping outside the dialog
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Confirm Logout"),
+            content: Text("Are you sure you want to log out?"),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .pop(false); // User does not want to log out
+                },
+                child: Text("Cancel"),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(true); // User wants to log out
+                },
+                child: Text("Logout"),
+              ),
+            ],
+          );
+        },
+      ) ??
+      false; // Ensure that the default return value is 'false' if dialog is dismissed
+}
+
+// Optional: Function to show an error dialog if logout fails
+void _showErrorDialog(BuildContext context, String message) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text("Error"),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(); // Close the error dialog
+            },
+            child: Text("OK"),
+          ),
+        ],
+      );
+    },
+  );
 }

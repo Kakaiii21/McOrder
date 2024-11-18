@@ -29,6 +29,14 @@ class AuthService {
     }
   }
 
+  Future<void> logoutUser() async {
+    try {
+      await _auth.signOut();
+    } catch (e) {
+      throw 'An error occurred while logging out. Please try again.';
+    }
+  }
+
   String _handleAuthError(dynamic error) {
     if (error is FirebaseAuthException) {
       // Print the error details to debug the issue

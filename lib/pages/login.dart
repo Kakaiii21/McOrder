@@ -214,7 +214,8 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: EdgeInsets.symmetric(vertical: screenHeight * 0),
+        padding: EdgeInsets.symmetric(
+            vertical: screenHeight * 0.04), // Adjust vertical padding
         child: TextButton(
           onPressed: _login,
           style: TextButton.styleFrom(
@@ -224,7 +225,11 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: screenHeight * 0.025),
+            padding: EdgeInsets.symmetric(
+              vertical: screenHeight * 0.025, // Adjust button height
+              horizontal: screenWidth *
+                  0.05, // Adjust horizontal padding to make it responsive
+            ),
             child: Text(
               "Log In",
               style: TextStyle(

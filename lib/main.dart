@@ -140,7 +140,7 @@ class HomeScreen extends StatelessWidget {
                   Expanded(
                     child: TextButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/signup');
+                        Navigator.pushNamed(context, '/signup2');
                       },
                       style: TextButton.styleFrom(
                         backgroundColor: const Color.fromRGBO(239, 146, 0, 1),
