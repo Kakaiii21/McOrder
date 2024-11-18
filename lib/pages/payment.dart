@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Payment extends StatelessWidget {
@@ -288,8 +291,14 @@ class Payment extends StatelessWidget {
                       children: [
                         ElevatedButton(
                           onPressed: () {
-                            Navigator.pushNamed(context,
-                                '/endpage'); // Navigate to the end page on confirm
+                            // Calculate total amount
+                            double totalAmount = calculateTotal();
+
+                            // Send order to Firebase
+                            sendOrderToFirebase(orders, totalAmount);
+
+                            // Navigate to the end page
+                            Navigator.pushNamed(context, '/endpage');
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor:
@@ -348,5 +357,35 @@ class Payment extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+Future<void> sendOrderToFirebase(
+    List<Map<String, dynamic>> orders, double totalAmount) async {
+  CollectionReference ordersCollection =
+      FirebaseFirestore.instance.collection('orders');
+
+  // Function to generate a random order number between 1 and 500
+  String generateOrderNumber() {
+    final random = Random();
+    return (random.nextInt(500) + 1)
+        .toString(); // Generates a random order number between 1 and 500
+  }
+
+  try {
+    // Generate a random order number for the entire order
+    String orderNumber = generateOrderNumber();
+
+    // Add the order to the Firebase Firestore database
+    await ordersCollection.add({
+      'orderNumber': orderNumber, // Order number for the whole order
+      'orders': orders, // The individual order details
+      'totalAmount': totalAmount, // The total amount of the order
+      'orderDate': Timestamp.now(), // Timestamp for when the order was placed
+    });
+
+    print("Order placed successfully with Order Number: $orderNumber");
+  } catch (e) {
+    print("Error sending order to Firebase: $e");
   }
 }

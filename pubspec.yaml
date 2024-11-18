@@ -32,7 +32,8 @@ dependencies:
   flutter:
     sdk: flutter
   qr_flutter: ^4.0.0
-  firebase_core: ^2.26.0  # Replace with the latest version available
+  firebase_core: ^2.26.0
+  cloud_firestore: ^4.17.5
   firebase_auth: ^4.17.7  #
   fluttertoast: ^8.2.8
 
