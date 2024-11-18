@@ -38,7 +38,7 @@ class McOrderApp extends StatelessWidget {
         '/menu': (context) => const MenuPage(isTakeOutSelected: false),
         '/orderDetailsPage': (context) => const OrderDetails(orders: []),
 
-        '/payment': (context) => const PaymentPage(),
+        '/payment': (context) => Payment(),
         '/endpage': (context) => const EndPage(),
       },
     );

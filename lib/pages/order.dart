@@ -162,7 +162,14 @@ class _OrderDetailsState extends State<OrderDetails> {
                     ),
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/payment');
+                        // Assuming `widget.orders` contains the order details
+                        Navigator.pushNamed(
+                          context,
+                          '/payment',
+                          // Ensure this route is defined in your app's route configuration
+                          arguments: widget
+                              .orders, // Passing the order details as arguments
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color.fromRGBO(
