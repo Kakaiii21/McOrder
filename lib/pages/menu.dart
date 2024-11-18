@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_application/pages/mainmenu.dart';
+import 'package:mobile_application/pages/order.dart';
 
 class MenuPage extends StatefulWidget {
   final bool isTakeOutSelected;
@@ -21,6 +23,7 @@ class MenuPage extends StatefulWidget {
     this.showHappyMMenu = false,
     this.showMnMMenu = false,
   });
+
   @override
   State<MenuPage> createState() => _MenuPageState();
 }
@@ -34,142 +37,9 @@ class _MenuPageState extends State<MenuPage> {
   late bool showBurgerMenu;
   late bool showHappyMMenu;
   late bool showMnMMenu;
+  List<Map<String, dynamic>> orders = []; // To store the orders globally
 
   int cartItemCount = 0;
-
-  void _showOrderDialog(BuildContext context, String itemName, String imagePath,
-      double price, String dialogImagePath) {
-    int quantity = 0; // Define quantity inside the dialog function
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          content: StatefulBuilder(
-            builder: (BuildContext context, StateSetter setState) {
-              return Padding(
-                padding: const EdgeInsets.all(0.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    // Display a different image in the dialog
-                    Image.asset(
-                      dialogImagePath,
-                      height: 200,
-                      width: 200,
-                      fit: BoxFit.cover,
-                    ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        '$itemName',
-                        textAlign:
-                            TextAlign.left, // Aligns the text to the left
-                        style: TextStyle(
-                          fontSize: 23,
-                          fontFamily: "DM Sans",
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Price: \$${price.toStringAsFixed(2)}',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontFamily: "DM Sans",
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Quantity:",
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontFamily: "DM Sans",
-                              color: Colors.black,
-                            ),
-                          ),
-                          Row(
-                            children: [
-                              IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    if (quantity > 0) quantity--;
-                                  });
-                                },
-                                icon: Icon(Icons.remove),
-                                color: Colors.black,
-                                iconSize: 20,
-                              ),
-                              Text(
-                                "$quantity",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontFamily: "DM Sans",
-                                  color: Colors.black,
-                                ),
-                              ),
-                              IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    quantity++;
-                                  });
-                                },
-                                icon: Icon(Icons.add),
-                                color: Colors.black,
-                                iconSize: 20,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      height: 50,
-                      width: 300,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          double totalPrice = price * quantity;
-
-                          // Navigator.push(
-                          //  context,
-                          // MaterialPageRoute(
-                          //   builder: (context) => OrderSummaryPage(
-                          //     itemName: itemName,
-                          //     totalPrice: totalPrice,
-                          //    imagePath: imagePath,
-                          //  ),
-                          // ),
-                          // );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromRGBO(255, 174, 0, 1),
-                        ),
-                        child: Text(
-                          'Add Order',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontFamily: "DM Sans"),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
-        );
-      },
-    );
-  }
 
   @override
   void initState() {
@@ -182,6 +52,125 @@ class _MenuPageState extends State<MenuPage> {
     showBurgerMenu = widget.showBurgerMenu;
     showHappyMMenu = widget.showHappyMMenu;
     showMnMMenu = widget.showMnMMenu;
+  }
+
+  // Show Order Dialog
+  void _showOrderDialog(
+      BuildContext context, String itemName, String imagePath, double price) {
+    int quantity = 0;
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Image.asset(
+                    imagePath,
+                    height: 200,
+                    width: 200,
+                    fit: BoxFit.cover,
+                  ),
+                  SizedBox(height: 10),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      itemName,
+                      style: TextStyle(fontSize: 23, fontFamily: "DM Sans"),
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Price: \$${price.toStringAsFixed(2)}',
+                      style: TextStyle(fontSize: 15, fontFamily: "DM Sans"),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Quantity:",
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontFamily: "DM Sans",
+                          color: Colors.black,
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              setState(() {
+                                if (quantity > 0) quantity--;
+                              });
+                            },
+                            icon: Icon(Icons.remove),
+                          ),
+                          Text(
+                            "$quantity",
+                            style:
+                                TextStyle(fontSize: 15, fontFamily: "DM Sans"),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              setState(() {
+                                quantity++;
+                              });
+                            },
+                            icon: Icon(Icons.add),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (quantity > 0) {
+                        setState(() {
+                          // Add the order to the list
+                          orders.add({
+                            'itemName': itemName,
+                            'imagePath': imagePath,
+                            'quantity': quantity,
+                            'totalPrice': price * quantity,
+                          });
+
+                          // Update the cart item count
+                          cartItemCount += quantity;
+                        });
+
+                        // Close the dialog
+                        Navigator.pop(context);
+
+                        // Navigate to OrderDetails page
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromRGBO(255, 174, 0, 1),
+                    ),
+                    child: Text(
+                      'Add Order',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontFamily: "DM Sans",
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -209,18 +198,21 @@ class _MenuPageState extends State<MenuPage> {
                             'assets/images/menus/mainmenubtn.png',
                             withBorder: true, onTap: () {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    const MenuPage(isTakeOutSelected: false),
-                              ));
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Mainmenu(
+                                isTakeOutSelected:
+                                    isTakeOutSelected, // Pass for Dine In
+                              ),
+                            ),
+                          );
                         }),
                         buildMenuButtonmain(screenWidth, screenHeight,
                             'assets/images/menus/newprod.png', withBorder: true,
                             onTap: () {
                           setState(() {
                             isTakeOutSelected =
-                                false; // Can be toggled as per your logic
+                                isTakeOutSelected; // Can be toggled as per your logic
                             showNewProductsMenu = true;
                             showDrinksDessertMenu = false;
                             showBurgerMenu = false;
@@ -231,7 +223,7 @@ class _MenuPageState extends State<MenuPage> {
                             onTap: () {
                           setState(() {
                             isTakeOutSelected =
-                                false; // Can be toggled as per your logic
+                                isTakeOutSelected; // Can be toggled as per your logic
                             showDrinksDessertMenu =
                                 true; // New flag to show new products menu
                             showNewProductsMenu = false;
@@ -244,7 +236,7 @@ class _MenuPageState extends State<MenuPage> {
                             onTap: () {
                           setState(() {
                             isTakeOutSelected =
-                                false; // Can be toggled as per your logic
+                                isTakeOutSelected; // Can be toggled as per your logic
                             showMealMenu =
                                 true; // New flag to show new products menu
                             showNewProductsMenu = false;
@@ -257,7 +249,7 @@ class _MenuPageState extends State<MenuPage> {
                             onTap: () {
                           setState(() {
                             isTakeOutSelected =
-                                false; // Can be toggled as per your logic
+                                isTakeOutSelected; // Can be toggled as per your logic
                             showBurgerMenu =
                                 true; // New flag to show new products menu
                             showNewProductsMenu = false;
@@ -269,7 +261,7 @@ class _MenuPageState extends State<MenuPage> {
                             'assets/images/menus/happymeal.png', onTap: () {
                           setState(() {
                             isTakeOutSelected =
-                                false; // Can be toggled as per your logic
+                                isTakeOutSelected; // Can be toggled as per your logic
                             showHappyMMenu =
                                 true; // New flag to show new products menu
                             showNewProductsMenu = false;
@@ -283,7 +275,7 @@ class _MenuPageState extends State<MenuPage> {
                             onTap: () {
                           setState(() {
                             isTakeOutSelected =
-                                false; // Can be toggled as per your logic
+                                isTakeOutSelected; // Can be toggled as per your logic
                             showMnMMenu =
                                 true; // New flag to show new products menu
                             showNewProductsMenu = false;
@@ -298,7 +290,7 @@ class _MenuPageState extends State<MenuPage> {
                             withBorder: true, onTap: () {
                           setState(() {
                             isTakeOutSelected =
-                                false; // Can be toggled as per your logic
+                                isTakeOutSelected; // Can be toggled as per your logic
                             showFriesMenu =
                                 true; // New flag to show new products menu
                             showNewProductsMenu = false;
@@ -796,7 +788,12 @@ class _MenuPageState extends State<MenuPage> {
             child: GestureDetector(
               onTap: () {
                 // Add your button action here
-                Navigator.pushNamed(context, '/orderDetailsPage');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => OrderDetails(orders: orders),
+                  ),
+                );
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -958,8 +955,7 @@ class _MenuPageState extends State<MenuPage> {
         splashColor: const Color.fromRGBO(192, 1, 0, 0.5),
         onTap: () {
           // Show the order dialog with the item-specific info (image, name, price, and dialog image)
-          _showOrderDialog(
-              context, itemName, imagePath, price, dialogImagePath);
+          _showOrderDialog(context, itemName, dialogImagePath, price);
         },
         child: Container(
           width: screenWidth * 0.38,

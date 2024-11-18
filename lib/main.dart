@@ -36,7 +36,8 @@ class McOrderApp extends StatelessWidget {
         '/mainmenu': (context) =>
             const Mainmenu(isTakeOutSelected: false), // Pass the parameter here
         '/menu': (context) => const MenuPage(isTakeOutSelected: false),
-        '/orderDetailsPage': (context) => const OrderDetails(),
+        '/orderDetailsPage': (context) => const OrderDetails(orders: []),
+
         '/payment': (context) => const PaymentPage(),
         '/endpage': (context) => const EndPage(),
       },
