@@ -1,35 +1,36 @@
 import 'package:flutter/material.dart';
 
-class EndPage extends StatefulWidget {
-  const EndPage({super.key});
+class EndPage extends StatelessWidget {
+  final String orderNumber; // Accept order number as a parameter
 
-  @override
-  State<EndPage> createState() => _EndPageState();
-}
+  const EndPage({super.key, required this.orderNumber});
 
-class _EndPageState extends State<EndPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(192, 1, 0, 1),
+      backgroundColor: const Color.fromRGBO(192, 1, 0, 1),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
               height: MediaQuery.of(context).size.height * 0.4, // Adjust height
               width: double.infinity,
-              decoration: const BoxDecoration(
-                color: Colors.white, // Orange background
-                borderRadius: BorderRadius.only(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(50),
                   bottomRight: Radius.circular(50),
                 ),
+                border: Border.all(
+                  color: const Color.fromRGBO(255, 174, 0, 1),
+                  width: 10.0,
+                ),
               ),
-              child: const Center(
+              child: Center(
                 child: Text(
-                  'QR CODE',
+                  orderNumber, // Display the passed order number
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 30,
                     fontFamily: "DM Sans",
                     fontWeight: FontWeight.bold,
@@ -42,7 +43,7 @@ class _EndPageState extends State<EndPage> {
             const Padding(
               padding: EdgeInsets.all(1.0),
               child: Text(
-                'Your order has been successfully completed. Please Proceed to the Counter to Pay for your order.',
+                'Thank you! Please Proceed to the Counter to Pay for your order.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: "DM Sans",
@@ -55,7 +56,7 @@ class _EndPageState extends State<EndPage> {
             ElevatedButton(
               onPressed: () {
                 Navigator.pushNamed(
-                    context, '/mainmenu'); // Navigate back to the previous page
+                    context, '/mainmenu'); // Navigate to main menu
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color.fromRGBO(255, 174, 0, 1),

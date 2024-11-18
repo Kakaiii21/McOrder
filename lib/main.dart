@@ -36,10 +36,11 @@ class McOrderApp extends StatelessWidget {
         '/mainmenu': (context) =>
             const Mainmenu(isTakeOutSelected: false), // Pass the parameter here
         '/menu': (context) => const MenuPage(isTakeOutSelected: false),
-        '/orderDetailsPage': (context) => const OrderDetails(orders: []),
+        '/orderDetailsPage': (context) =>
+            const OrderDetails(orders: [], isTakeOutSelected: false),
 
         '/payment': (context) => Payment(),
-        '/endpage': (context) => const EndPage(),
+        '/endpage': (context) => const EndPage(orderNumber: "000000"),
       },
     );
   }

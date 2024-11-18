@@ -791,7 +791,11 @@ class _MenuPageState extends State<MenuPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => OrderDetails(orders: orders),
+                    builder: (context) => OrderDetails(
+                      orders: orders, // Pass the orders list
+                      isTakeOutSelected:
+                          isTakeOutSelected, // Pass the isTakeOutSelected value here
+                    ),
                   ),
                 );
               },

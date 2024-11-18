@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile_application/pages/end.dart';
 
 class Payment extends StatelessWidget {
   @override
@@ -17,9 +18,11 @@ class Payment extends StatelessWidget {
     List<String> paymentMethods = ["Cash", "Gcash", "Card"];
 
     // Retrieve the order data passed from the previous screen
-    final List<Map<String, dynamic>> orders = ModalRoute.of(context)!
-        .settings
-        .arguments as List<Map<String, dynamic>>;
+    final Map<String, dynamic> arguments =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final List<Map<String, dynamic>> orders = arguments['orders'];
+    final bool isTakeOutSelected =
+        arguments['isTakeOutSelected']; // Retrieve isTakeOutSelected
 
     // Calculate the total price
     double calculateTotal() {
@@ -36,6 +39,7 @@ class Payment extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Display isTakeOutSelected at the top of the list
               Container(
                 margin: EdgeInsets.fromLTRB(
                     screenWidth * 0.00,
@@ -84,6 +88,8 @@ class Payment extends StatelessWidget {
                         ),
                       ),
                     ),
+                    // Add isTakeOutSelected display
+
                     // List of orders
                     Container(
                       margin: EdgeInsets.symmetric(
@@ -101,6 +107,17 @@ class Payment extends StatelessWidget {
                       ),
                       child: Column(
                         children: [
+                          Text(
+                            isTakeOutSelected
+                                ? "Take Out"
+                                : "Dine In", // Display based on selection
+                            style: TextStyle(
+                              fontSize: fontSize(screenHeight * 0.025),
+                              fontFamily: "DM Sans",
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                           Expanded(
                             child: ListView.builder(
                               itemCount: orders.length,
@@ -290,15 +307,31 @@ class Payment extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
                             // Calculate total amount
                             double totalAmount = calculateTotal();
 
-                            // Send order to Firebase
-                            sendOrderToFirebase(orders, totalAmount);
+                            // Send order to Firebase and get the generated order number
+                            String orderNumber = await sendOrderToFirebase(
+                                orders, totalAmount, isTakeOutSelected);
 
-                            // Navigate to the end page
-                            Navigator.pushNamed(context, '/endpage');
+                            // Navigate to the end page with the order number
+                            if (orderNumber.isNotEmpty) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      EndPage(orderNumber: orderNumber),
+                                ),
+                              );
+                            } else {
+                              // Handle the error case where orderNumber is empty
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                    content: Text(
+                                        "Failed to place order. Please try again.")),
+                              );
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor:
@@ -360,32 +393,53 @@ class Payment extends StatelessWidget {
   }
 }
 
-Future<void> sendOrderToFirebase(
-    List<Map<String, dynamic>> orders, double totalAmount) async {
+// Refactored method to generate the order number inside `sendOrderToFirebase`:
+Future<String> sendOrderToFirebase(List<Map<String, dynamic>> orders,
+    double totalAmount, bool isTakeOutSelected) async {
   CollectionReference ordersCollection =
       FirebaseFirestore.instance.collection('orders');
 
-  // Function to generate a random order number between 1 and 500
   String generateOrderNumber() {
     final random = Random();
-    return (random.nextInt(500) + 1)
-        .toString(); // Generates a random order number between 1 and 500
+    return (random.nextInt(500) + 1).toString();
+  }
+
+  Future<String> getUniqueOrderNumber() async {
+    String orderNumber = generateOrderNumber();
+    bool exists = true;
+
+    while (exists) {
+      final querySnapshot = await ordersCollection
+          .where('orderNumber', isEqualTo: orderNumber)
+          .get();
+      exists = querySnapshot.docs.isNotEmpty;
+
+      if (exists) {
+        orderNumber = generateOrderNumber();
+      }
+    }
+    return orderNumber;
   }
 
   try {
-    // Generate a random order number for the entire order
-    String orderNumber = generateOrderNumber();
+    String orderNumber = await getUniqueOrderNumber();
+    String orderType = isTakeOutSelected ? "Take Out" : "Dine In";
 
-    // Add the order to the Firebase Firestore database
     await ordersCollection.add({
-      'orderNumber': orderNumber, // Order number for the whole order
-      'orders': orders, // The individual order details
-      'totalAmount': totalAmount, // The total amount of the order
-      'orderDate': Timestamp.now(), // Timestamp for when the order was placed
+      'orderNumber': orderNumber,
+      'orders': orders,
+      'totalAmount': totalAmount,
+      'orderDate': Timestamp.now(),
+      'orderType': orderType,
+      'isTakeOutSelected': isTakeOutSelected,
     });
 
     print("Order placed successfully with Order Number: $orderNumber");
+
+    // Return the order number
+    return orderNumber;
   } catch (e) {
     print("Error sending order to Firebase: $e");
+    return ''; // Return an empty string in case of error
   }
 }

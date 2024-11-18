@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 
 class OrderDetails extends StatefulWidget {
   final List<Map<String, dynamic>> orders;
+  final bool isTakeOutSelected; // Add this line
 
-  const OrderDetails({Key? key, required this.orders}) : super(key: key);
+  const OrderDetails(
+      {Key? key, required this.orders, required this.isTakeOutSelected})
+      : super(key: key); // Modify constructor
 
   @override
   State<OrderDetails> createState() => _OrderDetailsState();
@@ -85,46 +88,70 @@ class _OrderDetailsState extends State<OrderDetails> {
                         width: 2.0,
                       ),
                     ),
-                    child: widget.orders.isNotEmpty
-                        ? ListView.builder(
-                            itemCount: widget.orders.length,
-                            itemBuilder: (context, index) {
-                              final order = widget.orders[index];
-                              return ListTile(
-                                leading: Image.asset(
-                                  order['imagePath'],
-                                  width: 50,
-                                  height: 50,
-                                ),
-                                title: Text(
-                                  order['itemName'],
-                                  style: TextStyle(
-                                    fontSize: fontSize(18),
-                                    fontFamily: "DM Sans",
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                subtitle: Text(
-                                  'Qty: ${order['quantity']} | \$${order['totalPrice'].toStringAsFixed(2)}',
-                                  style: TextStyle(
-                                    fontSize: fontSize(14),
-                                    fontFamily: "DM Sans",
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                              );
-                            },
-                          )
-                        : Center(
-                            child: Text(
-                              'No orders available.',
-                              style: TextStyle(
-                                fontSize: fontSize(18),
-                                color: Colors.grey,
-                              ),
+                    child: Column(
+                      children: [
+                        // Display Takeout or Dine-in based on the selection
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(
+                              screenWidth * .02,
+                              screenHeight * 0.001,
+                              screenWidth * .02,
+                              screenHeight * 0.00),
+                          child: Text(
+                            widget.isTakeOutSelected ? 'Take-Out' : 'Dine-In',
+                            style: TextStyle(
+                              fontSize: fontSize(18),
+                              fontFamily: "DM Sans",
+                              color: Colors.black,
                             ),
                           ),
+                        ),
+                        // Display the orders if available
+                        Expanded(
+                          child: widget.orders.isNotEmpty
+                              ? ListView.builder(
+                                  itemCount: widget.orders.length,
+                                  itemBuilder: (context, index) {
+                                    final order = widget.orders[index];
+                                    return ListTile(
+                                      leading: Image.asset(
+                                        order['imagePath'],
+                                        width: 50,
+                                        height: 50,
+                                      ),
+                                      title: Text(
+                                        order['itemName'],
+                                        style: TextStyle(
+                                          fontSize: fontSize(18),
+                                          fontFamily: "DM Sans",
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      subtitle: Text(
+                                        'Qty: ${order['quantity']} | \$${order['totalPrice'].toStringAsFixed(2)}',
+                                        style: TextStyle(
+                                          fontSize: fontSize(14),
+                                          fontFamily: "DM Sans",
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                )
+                              : Center(
+                                  child: Text(
+                                    'No orders available.',
+                                    style: TextStyle(
+                                      fontSize: fontSize(18),
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ),
+                        ),
+                      ],
+                    ),
                   ),
+
                   // Total Price Display
                   Container(
                     margin:
@@ -162,13 +189,15 @@ class _OrderDetailsState extends State<OrderDetails> {
                     ),
                     child: ElevatedButton(
                       onPressed: () {
-                        // Assuming `widget.orders` contains the order details
+                        // Assuming `widget.orders` contains the order details and `widget.isTakeOutSelected` holds the selected state
                         Navigator.pushNamed(
                           context,
                           '/payment',
-                          // Ensure this route is defined in your app's route configuration
-                          arguments: widget
-                              .orders, // Passing the order details as arguments
+                          arguments: {
+                            'orders': widget.orders, // Pass the order details
+                            'isTakeOutSelected': widget
+                                .isTakeOutSelected, // Pass isTakeOutSelected
+                          },
                         );
                       },
                       style: ElevatedButton.styleFrom(
